@@ -7,6 +7,7 @@ import AuthContext from "./contexts/AuthContext";
 import LoginPage from "./components/LoginPage";
 import SignInPage from "./components/SignInPage";
 import HomePage from "./components/HomePage";
+import NovaEntrada from "./components/NovaEntrada";
 import { useState } from "react";
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
             <Route path={"/"} element={<LoginPage />} />
             <Route path={"/cadastro"} element={<SignInPage />} />
             <Route path={"/home"} element={<HomePage />} />
-            <Route path={"/nova-entrada"} element={<HomePage />} />
+            <Route path={"/nova-entrada"} element={<NovaEntrada />} />
             <Route path={"/nova-saida"} element={<HomePage />} />
           </Routes>
         </Container>

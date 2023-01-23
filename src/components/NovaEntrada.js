@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios"
+import AuthContext from "../contexts/AuthContext";
 
 export default function Entrada() {
   const navigate = useNavigate();
+  const { userData, setUserData } = useContext(AuthContext);
   const [deposit, setDeposit] = useState({ value: "", description: "" });
 
   function handleSubmit(event){
     event.preventDefault();
-    const { email, password } = userLogin;
-    if (!email || !password) return;
+    const { value, description } = deposit;
+    if (!value || !description) return;
     const request = axios.post("http://localhost:5000/nova-entrada", {
-      email: email,
-      password: password,
+      userId: userData._id,
+      value: value,
+      description: description,
     });
     request.then((item) => {
       console.log(item);
