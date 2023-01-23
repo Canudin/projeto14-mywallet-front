@@ -2,21 +2,34 @@ import "./css/reset.css";
 import "./css/style.css";
 import styled from "styled-components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthContext from "./contexts/AuthContext";
 
 import LoginPage from "./components/LoginPage";
 import SignInPage from "./components/SignInPage";
+import HomePage from "./components/HomePage";
+import { useState } from "react";
 
 export default function App() {
+  const [userData, setUserData] = useState({
+    name: "",
+    _id: "",
+    email: "",
+    token: "",
+  });
   return (
-    <BrowserRouter>
-      <Container>
-        <Routes>
-          <Route path={"/"} element={<LoginPage />}/>
-          <Route path={"/cadastro"} element={<SignInPage />}/>
-          {/* <Route path={"/"} element={<LoginPage />}/> */}
-        </Routes>
-      </Container>
-    </BrowserRouter>
+    <AuthContext.Provider value={{ userData, setUserData }}>
+      <BrowserRouter>
+        <Container>
+          <Routes>
+            <Route path={"/"} element={<LoginPage />} />
+            <Route path={"/cadastro"} element={<SignInPage />} />
+            <Route path={"/home"} element={<HomePage />} />
+            <Route path={"/nova-entrada"} element={<HomePage />} />
+            <Route path={"/nova-saida"} element={<HomePage />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 
@@ -28,5 +41,3 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-

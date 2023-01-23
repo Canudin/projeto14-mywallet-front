@@ -17,18 +17,17 @@ export default function SignIn() {
     const { name, email, password, repeat_password } = userSignIn;
     if (password !== repeat_password) return;
     if (!name || !email || !password) return;
-    // const request = axios.post("mongodb://localhost:27017/cadastro", {
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    // });
-    // request.then((a) => {
-    //   navigate("/");
-    //   console.log(a);
-    // });
-    // request.catch((a) => console.log(a.response.data));
-    console.log(userSignIn);
-    navigate("/");
+    const request = axios.post("http://localhost:5000/cadastro", {
+      name: name,
+      email: email,
+      password: password,
+      repeat_password: repeat_password
+    });
+    request.then((item) => {
+      navigate("/");
+      console.log(item);
+    });
+    request.catch((item) => console.log(item.response.data));
   }
 
   return (
