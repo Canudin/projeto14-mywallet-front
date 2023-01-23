@@ -8,6 +8,7 @@ import LoginPage from "./components/LoginPage";
 import SignInPage from "./components/SignInPage";
 import HomePage from "./components/HomePage";
 import NovaEntrada from "./components/NovaEntrada";
+import NovaSaida from "./components/NovaSaida";
 import { useState } from "react";
 
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
             <Route path={"/cadastro"} element={<SignInPage />} />
             <Route path={"/home"} element={<HomePage />} />
             <Route path={"/nova-entrada"} element={<NovaEntrada />} />
-            <Route path={"/nova-saida"} element={<HomePage />} />
+            <Route path={"/nova-saida"} element={<NovaSaida />} />
           </Routes>
         </Container>
       </BrowserRouter>

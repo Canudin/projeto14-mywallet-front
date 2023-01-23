@@ -5,8 +5,9 @@ import { useContext, useEffect } from "react";
 import axios from "axios";
 
 export default function HomePage() {
-  const navigate = useNavigate();
   const { userData, setUserData } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const config = {
       headers: {
@@ -14,14 +15,17 @@ export default function HomePage() {
       },
     };
     const request = axios.get("http://localhost:5000/home", config);
-    request.then((item) => console.log(item));
+    request.then((item) => {
+      const { _id, email, name } = item.data;
+      setUserData({...userData, _id: _id, email: email, name:name})
+    });
     return () => {};
   }, []);
 
   return (
     <HomeContainer>
       <Greetings>
-        <span>Olá, Fulano</span>
+        <span>Olá, {userData.name}</span>
         <ion-icon name="exit-outline"></ion-icon>
       </Greetings>
       <Registers />
