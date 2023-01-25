@@ -1,22 +1,27 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import axios from "axios"
+import axios from "axios";
 import AuthContext from "../contexts/AuthContext";
 
-export default function Entrada() {
+export default function Saida() {
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(AuthContext);
   const [deposit, setDeposit] = useState({ value: "", description: "" });
+  const type = true; //true = entrada
 
-  function handleSubmit(event){
+  function handleSubmit(event) {
     event.preventDefault();
     const { value, description } = deposit;
     if (!value || !description) return;
+    const config = {
+      headers: { "Authorization": `Bearer ${userData.token}`},
+    };
     const request = axios.post("http://localhost:5000/nova-entrada", {
       userId: userData._id,
       value: value,
       description: description,
+      type: type,
     });
     request.then((item) => {
       console.log(item);
@@ -25,14 +30,15 @@ export default function Entrada() {
     request.catch((item) => console.log(item.response.data));
   }
   return (
-    <HomeContainer>
+    <NovaEntradaContainer>
       <Header>
         <span>Nova entrada</span>
-        <ion-icon name="exit-outline"></ion-icon>
       </Header>
       <form onSubmit={handleSubmit}>
         <input
           type="number"
+          min="0"
+          step="0.01"
           placeholder="Valor"
           onChange={(content) => {
             setDeposit({ ...deposit, value: content.target.value });
@@ -45,14 +51,49 @@ export default function Entrada() {
             setDeposit({ ...deposit, description: content.target.value });
           }}
         />
+        <button type="submit">Salvar entrada</button>
+        <button type="reset" onClick={() => navigate("/home")}>
+          Cancelar
+        </button>
       </form>
-    </HomeContainer>
+    </NovaEntradaContainer>
   );
 }
 
-const HomeContainer = styled.div`
+const NovaEntradaContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
+  margin-top: 15px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  form > input {
+    width: 330px;
+    height: 54px;
+    padding-left: 1rem;
+    font-size: 1.25rem;
+    border-radius: 5px;
+    border: none;
+    margin-top: 12px;
+  }
+  form > button {
+    width: 330px;
+    height: 45px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    margin-top: 15px;
+    background-color: #a328d6;
+    color: #ffffff;
+  }
+  &:nth-child(3) {
+    margin-top: 15px;
+  }
 `;
 
 const Header = styled.div`
@@ -64,34 +105,4 @@ const Header = styled.div`
   color: #ffffff;
   justify-content: space-between;
   align-items: center;
-`;
-
-const Registers = styled.div`
-  width: 330px;
-  height: calc(100vh - 220px);
-  background-color: #ffffff;
-  margin: 20px 0;
-  border-radius: 5px;
-`;
-
-const Entries = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const NewEntry = styled.div`
-  width: 155px;
-  height: 115px;
-  padding: 20px;
-  background-color: #a328d6;
-  border-radius: 5px;
-  display: grid;
-  flex-direction: column;
-  align-content: space-between;
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  span {
-    width: 60px;
-  }
 `;

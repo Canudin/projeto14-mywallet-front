@@ -30,11 +30,11 @@ export default function HomePage() {
       </Greetings>
       <Registers />
       <Entries>
-        <NewEntry onClick={navigate("/nova-entrada")}>
+        <NewEntry onClick={() => navigate("/nova-entrada")}>
           <ion-icon name="add-circle-outline"></ion-icon>
           <span>Nova entrada</span>
         </NewEntry>
-        <NewEntry onClick={navigate("/nova-saida")}>
+        <NewEntry onClick={() => navigate("/nova-saida")}>
           <ion-icon name="remove-circle-outline"></ion-icon>
           <span>Nova saída</span>
         </NewEntry>
